@@ -1,4 +1,4 @@
-import { prisma } from "../database/connect";
+import { prisma } from "..";
 import { Request, Response } from "express";
 
 class TransactionController {
