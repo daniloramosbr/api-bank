@@ -1,22 +1,21 @@
-import pg from 'pg';
+import pg from "pg";
 
 const { Pool } = pg;
 
-const Connectdb = () => {
+import 'dotenv/config' 
 
-    const pool = new Pool({
-        connectionString: process.env.POSTGRES_URL,
-      })
-      
-      pool.connect((err: any)=>{
-      
-          if (err) {
-              console.error('Error connecting to the database:', err.stack)
-          } else {
-              console.log('Connected to the database!')
-          }
-      
-      })
-}
+const { POSTGRES_URL } = process.env
 
-export default Connectdb
+const pool = new Pool({
+  connectionString: POSTGRES_URL,
+});
+
+pool.connect((err: any) => {
+  if (err) {
+    console.error("Error connecting to the database:", err.stack);
+  } else {
+    console.log("Connected to the database!");
+  }
+});
+
+export default pool;

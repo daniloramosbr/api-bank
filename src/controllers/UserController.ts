@@ -1,4 +1,4 @@
-// import { prisma } from "..";
+
 // import { Request, Response } from "express";
 // import Jwt from "jsonwebtoken";
 // import bcrypt from "bcrypt";
@@ -45,83 +45,83 @@
 //     }
 //   }
 
-//   async valid(request: Request, response: Response) {
-//     //valida user
-//     try {
-//       const { email, password } = request.body;
+// //   async valid(request: Request, response: Response) {
+// //     //valida user
+// //     try {
+// //       const { email, password } = request.body;
 
-//       const user = await prisma.user.findUnique({ where: { email } });
+// //       const user = await prisma.user.findUnique({ where: { email } });
 
-//       if (!user) {
-//         return response.status(401).json({ erro: "Usuário não encontrado" });
-//       }
+// //       if (!user) {
+// //         return response.status(401).json({ erro: "Usuário não encontrado" });
+// //       }
 
-//       const hash = await prisma.user.findUnique({
-//         where: { email: email },
-//         select: { password: true },
-//       });
+// //       const hash = await prisma.user.findUnique({
+// //         where: { email: email },
+// //         select: { password: true },
+// //       });
 
-//       if (hash == null) {
-//         return response.status(404).send({
-//           message: "usuário ou senha incorretos",
-//         });
-//       }
+// //       if (hash == null) {
+// //         return response.status(404).send({
+// //           message: "usuário ou senha incorretos",
+// //         });
+// //       }
 
-//       const validPassword = await bcrypt.compare(password, hash.password!); //verifica se a senha eh igual
+// //       const validPassword = await bcrypt.compare(password, hash.password!); //verifica se a senha eh igual
 
-//       if (!validPassword) {
-//         return response.status(401).json({ erro: "Senha inválida" });
-//       }
+// //       if (!validPassword) {
+// //         return response.status(401).json({ erro: "Senha inválida" });
+// //       }
 
-//       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
-//         expiresIn: "24h",
-//       });
+// //       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
+// //         expiresIn: "24h",
+// //       });
 
-//       response.json({ data });
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
-//   async googlevalid(request: Request, response: Response) {
-//     //valida google
-//     try {
-//       const { email } = request.body;
+// //       response.json({ data });
+// //     } catch (error) {
+// //       response.status(500).send(error);
+// //     }
+// //   }
+// //   async googlevalid(request: Request, response: Response) {
+// //     //valida google
+// //     try {
+// //       const { email } = request.body;
 
-//       const user = await prisma.user.findUnique({ where: { email } }); //busca no banco
+// //       const user = await prisma.user.findUnique({ where: { email } }); //busca no banco
 
-//       if (!user) {
-//         return response.status(401).json({ erro: "Usuário não encontrado" });
-//       }
+// //       if (!user) {
+// //         return response.status(401).json({ erro: "Usuário não encontrado" });
+// //       }
 
-//       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
-//         expiresIn: "24h",
-//       });
+// //       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
+// //         expiresIn: "24h",
+// //       });
 
-//       response.json({ data });
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
+// //       response.json({ data });
+// //     } catch (error) {
+// //       response.status(500).send(error);
+// //     }
+// //   }
 
-//   async all(request: Request, response: Response) {
-//     //busca todos users
-//     try {
-//       const user = request.params.id;
+// //   async all(request: Request, response: Response) {
+// //     //busca todos users
+// //     try {
+// //       const user = request.params.id;
 
-//       const data = await prisma.user.findMany({
-//         where: {
-//           NOT: {
-//             id: user,        //remove o com id informado
-//           },
-//         },
-//         select: {id: true,
-//           name: true,
-//         }
-//       });
-//       response.status(200).json({data});
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
+// //       const data = await prisma.user.findMany({
+// //         where: {
+// //           NOT: {
+// //             id: user,        //remove o com id informado
+// //           },
+// //         },
+// //         select: {id: true,
+// //           name: true,
+// //         }
+// //       });
+// //       response.status(200).json({data});
+// //     } catch (error) {
+// //       response.status(500).send(error);
+// //     }
+// //   }
 // }
 // export default new UserController();

@@ -1,23 +1,18 @@
-
 import { Request, Response } from "express";
+import pool from "../../database";
 
 class TransactionController {
+  async get(request: Request, response: Response) {
+    try {
+      const data = await pool.query(
+        "SELECT * FROM transaction ORDER BY createdAt DESCLIMIT 3"
+      );
 
- async get(request: Request, response: Response) {
-  try {
-    // const data = await prisma.transaction.findMany({
-    //   orderBy: {
-    //     createdAt: 'desc', 
-    //   },
-    //   take: 3, 
-    // });
-
-    response.status(200).json({ message: 'funcionando com sucesso!' });
-  } catch (error) {
-    response.status(500).send(error);
+      response.status(200).json({ data });
+    } catch (error) {
+      response.status(500).send(error);
+    }
   }
-}
-
 }
 
 export default new TransactionController();
