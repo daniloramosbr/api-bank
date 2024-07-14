@@ -13,16 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../../database"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 class TransactionController {
     get(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield database_1.default.query("SELECT * FROM Transaction ORDER BY DESC LIMIT 3");
-                response.status(200).json({ data });
+                const { rows } = yield database_1.default.query("SELECT * FROM transaction");
+                response.status(200).json(rows);
             }
             catch (error) {
                 response.status(500).send(error);
             }
+            // try {
+            //   const transactions = await prisma.transaction.findMany();
+            //   response.status(200).json(transactions)
+            // } catch (error) {
+            //   response.status(500).send(error)
+            // }
         });
     }
 }
