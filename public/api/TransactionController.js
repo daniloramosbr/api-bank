@@ -9,18 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("..");
 class TransactionController {
     get(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield __1.prisma.transaction.findMany({
-                    orderBy: {
-                        createdAt: 'desc',
-                    },
-                    take: 3,
-                });
-                response.status(200).json({ data });
+                // const data = await prisma.transaction.findMany({
+                //   orderBy: {
+                //     createdAt: 'desc', 
+                //   },
+                //   take: 3, 
+                // });
+                response.status(200).json({ message: 'funcionando com sucesso!' });
             }
             catch (error) {
                 response.status(500).send(error);
