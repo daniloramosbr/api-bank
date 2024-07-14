@@ -2,7 +2,7 @@ const express = require('express');
 const routes = require('./routes/routes');
 const { configDotenv } = require('dotenv');
 const { PrismaClient } = require("@prisma/client");
-const {connectdb} = require('connectdb');
+import Connectdb from "./database";
 
 const dotenv = configDotenv()
 
@@ -20,9 +20,10 @@ prisma.$connect()
 
 app.use(express.json());
 
-connectdb()
+Connectdb()
 
 app.use(routes)
+
 app.listen(process.env.PORT, () => {
   console.log(`Servidor rodando na porta ${process.env.PORT}`)
 })

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg = require('pg');
 const { Pool } = pg;
-const connectdb = () => {
+const Connectdb = () => {
     const pool = new Pool({
         connectionString: process.env.POSTGRES_URL,
     });
@@ -15,4 +15,4 @@ const connectdb = () => {
         }
     });
 };
-exports.default = connectdb;
+exports.default = Connectdb;

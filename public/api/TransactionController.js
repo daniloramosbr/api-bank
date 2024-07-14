@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 class TransactionController {
-    get(request, response) {
+    getr(equest, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const transactions = yield prisma.transaction.findMany();

@@ -1,10 +1,16 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const { Router } = require("express");
-const TransactionController_1 = __importDefault(require("../api/TransactionController"));
-const routes = Router();
-routes.get("/transactions", TransactionController_1.default.get);
-exports.default = routes;
+const routes = require("express").Router();
+const TransactionController = require("../api/TransactionController");
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+routes.get("/transactions", (equest, response) => {
+    try {
+        const transactions = prisma.transaction.findMany();
+        response.status(200).json(transactions);
+    }
+    catch (error) {
+        response.status(500).send(error);
+    }
+});
+module.exports = routes;

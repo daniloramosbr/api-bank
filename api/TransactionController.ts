@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 
 class TransactionController {
-  async get(request: Request, response: Response) {
+  async getr(equest: Request, response: Response) {
     try {
       const transactions = await prisma.transaction.findMany(); 
       response.status(200).json(transactions);
