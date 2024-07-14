@@ -1,12 +1,11 @@
 import { Router } from "express";
-
-// import UserController from "../controllers/UserController";
+import UserController from "../controllers/UserController";
 // import ValorController from "../api/ValorController";
 import TransactionController from "../controllers/TransactionController";
 
 const routes = Router()
 
-// routes.post("/signup", UserController.create)
+routes.post("/signup", UserController.create)
 // routes.post("/signin", UserController.valid)
 // routes.post("/googlesignin", UserController.googlevalid)
 // routes.get("/users/:id", UserController.all)

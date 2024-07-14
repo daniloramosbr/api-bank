@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-// import UserController from "../controllers/UserController";
+const UserController_1 = __importDefault(require("../controllers/UserController"));
 // import ValorController from "../api/ValorController";
 const TransactionController_1 = __importDefault(require("../controllers/TransactionController"));
 const routes = (0, express_1.Router)();
-// routes.post("/signup", UserController.create)
+routes.post("/signup", UserController_1.default.create);
 // routes.post("/signin", UserController.valid)
 // routes.post("/googlesignin", UserController.googlevalid)
 // routes.get("/users/:id", UserController.all)
