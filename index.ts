@@ -2,7 +2,9 @@ import express from 'express'
 import routes from './routes/routes';
 import { configDotenv } from 'dotenv';
 import { PrismaClient } from "@prisma/client"
-import ConnectDb from './database';
+import pg from 'pg';
+
+const { Pool } = pg;
 
 const dotenv = configDotenv()
 
@@ -20,7 +22,19 @@ prisma.$connect()
 
 app.use(express.json());
 
-ConnectDb()
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+})
+
+pool.connect((err)=>{
+
+    if (err) {
+        console.error('Error connecting to the database:', err.stack)
+    } else {
+        console.log('Connected to the database!')
+    }
+
+})
 
 app.use(routes)
 app.listen(process.env.PORT, () => {
