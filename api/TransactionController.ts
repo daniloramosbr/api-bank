@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-import { Request, Response } from "express";
-
+const { PrismaClient } = require('@prisma/client');
+import { Request, Response } from "express"; 
 const prisma = new PrismaClient();
+
 
 class TransactionController {
   async get(request: Request, response: Response) {

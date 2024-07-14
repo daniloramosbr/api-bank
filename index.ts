@@ -1,8 +1,8 @@
-import express from 'express'
-import routes from './routes/routes';
-import { configDotenv } from 'dotenv';
-import { PrismaClient } from "@prisma/client"
-import pg from 'pg';
+const express = require('express');
+const routes = require('./routes/routes');
+const { configDotenv } = require('dotenv');
+const { PrismaClient } = require("@prisma/client");
+const pg = require('pg');
 
 const { Pool } = pg;
 
@@ -16,7 +16,7 @@ prisma.$connect()
   .then(() => {
     console.log('conectado ao banco de dados!');
   })
-  .catch((error) => {
+  .catch((error: any) => {
     console.error('Erro ao conectar com o Prisma:', error.message);
   })
 
@@ -26,7 +26,7 @@ const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
 })
 
-pool.connect((err)=>{
+pool.connect((err: any)=>{
 
     if (err) {
         console.error('Error connecting to the database:', err.stack)

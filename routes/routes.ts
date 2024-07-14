@@ -1,4 +1,4 @@
-import { Router } from "express";
+const { Router } = require("express");
 
 import TransactionController from "../api/TransactionController";
 

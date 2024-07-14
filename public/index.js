@@ -1,18 +1,15 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.prisma = void 0;
-const express_1 = __importDefault(require("express"));
-const routes_1 = __importDefault(require("./routes/routes"));
-const dotenv_1 = require("dotenv");
-const client_1 = require("@prisma/client");
-const pg_1 = __importDefault(require("pg"));
-const { Pool } = pg_1.default;
-const dotenv = (0, dotenv_1.configDotenv)();
-const app = (0, express_1.default)();
-exports.prisma = new client_1.PrismaClient();
+const express = require('express');
+const routes = require('./routes/routes');
+const { configDotenv } = require('dotenv');
+const { PrismaClient } = require("@prisma/client");
+const pg = require('pg');
+const { Pool } = pg;
+const dotenv = configDotenv();
+const app = express();
+exports.prisma = new PrismaClient();
 exports.prisma.$connect()
     .then(() => {
     console.log('conectado ao banco de dados!');
@@ -20,7 +17,7 @@ exports.prisma.$connect()
     .catch((error) => {
     console.error('Erro ao conectar com o Prisma:', error.message);
 });
-app.use(express_1.default.json());
+app.use(express.json());
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
 });
@@ -32,7 +29,7 @@ pool.connect((err) => {
         console.log('Connected to the database!');
     }
 });
-app.use(routes_1.default);
+app.use(routes);
 app.listen(process.env.PORT, () => {
     console.log(`Servidor rodando na porta ${process.env.PORT}`);
 });
