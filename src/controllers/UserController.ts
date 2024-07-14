@@ -2,6 +2,7 @@
 // import { Request, Response } from "express";
 // import Jwt from "jsonwebtoken";
 // import bcrypt from "bcrypt";
+// import pool from "../../database";
 
 // class UserController {
 //   async create(request: Request, response: Response) {
@@ -9,37 +10,28 @@
 //     try {
 //       const { name, email, password } = request.body;
 
-//       const res = await prisma.user.findUnique({ where: { email } }); //faz busca no banco com o email
+//       if (!name || !email || !password) {
+//         return response.status(500).json({ erro: "insira todos os dados" });          //verircia se temm todos os dados
+//       }
+ 
+//       const data = await pool.query(`SELECT * FROM "user" WHERE email = '${email}'`)  //busca no banco o email
 
-//       if (!res == null) {
-//         return response.status(500).json({ erro: "email já cadastrado" });
+//       if (data.rows.length >= 1) {
+//         return response.status(500).json({ erro: "email já cadastrado" });         //retorna erro
 //       }
 
-//       const passCrypt = await bcrypt.hash(password, 10); //senha criptografada
+//       const passCrypt = await bcrypt.hash(password, 10);   //senha criptografada
+         
+//       const {rows} = await pool.query(`INSERT INTO "user" (id, name, email, password) VALUES(gen_random_uuid(),'${name}','${email}','${passCrypt}') RETURNING *`) //cria user
 
-//       const user = await prisma.user.create({
-//         //cria user
-//         data: {
-//           name,
-//           email,
-//           password: passCrypt,
-//         },
-//       });
+//       await pool.query(`INSERT INTO "valor" (name, user) VALUES('${name}','${rows[0].id}')`) //cria valor com id e name do user
 
-//       await prisma.valor.create({
-//         //cria valor com id e name
-//         data: {
-//           name,
-//           user: user.id,
-//         },
-//       });
+//     //   const data = Jwt.sign({ id: user.id, name: name }, "190526", {
+//     //     //cria token com id e name
+//     //     expiresIn: "24h",
+//     //   });
 
-//       const data = Jwt.sign({ id: user.id, name: name }, "190526", {
-//         //cria token com id e name
-//         expiresIn: "24h",
-//       });
-
-//       response.status(201).json({ data })
+//       response.status(201).json(rows)
 //     } catch (error) {
 //       response.status(500).send(error);
 //     }
