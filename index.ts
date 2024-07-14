@@ -1,5 +1,5 @@
 import express from 'express'
-import routes from './routes/routes';
+import routes from './src/routes/routes';
 import { configDotenv } from 'dotenv';
 import ConnectDb from './database';
 

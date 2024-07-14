@@ -1,7 +1,7 @@
 import { Router } from "express";
 // import UserController from "../api/UserController";
 // import ValorController from "../api/ValorController";
-import TransactionController from "../api/TransactionController";
+import TransactionController from "../controllers/TransactionController";
 
 const routes = Router()
 
