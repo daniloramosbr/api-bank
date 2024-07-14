@@ -1,95 +1,46 @@
 "use strict";
-// import { Request, Response } from "express";
-// import Jwt from "jsonwebtoken";
-// import bcrypt from "bcrypt";
-// import pool from "../../database";
-// class UserController {
-//   async create(request: Request, response: Response) {
-//     //cria usuario
-//     try {
-//       const { name, email, password } = request.body;
-//       if (!name || !email || !password) {
-//         return response.status(500).json({ erro: "insira todos os dados" });          //verircia se temm todos os dados
-//       }
-//       const data = await pool.query(`SELECT * FROM "user" WHERE email = '${email}'`)  //busca no banco o email
-//       if (data.rows.length >= 1) {
-//         return response.status(500).json({ erro: "email já cadastrado" });         //retorna erro
-//       }
-//       const passCrypt = await bcrypt.hash(password, 10);   //senha criptografada
-//       const {rows} = await pool.query(`INSERT INTO "user" (id, name, email, password) VALUES(gen_random_uuid(),'${name}','${email}','${passCrypt}') RETURNING *`) //cria user
-//       await pool.query(`INSERT INTO "valor" (name, user) VALUES('${name}','${rows[0].id}')`) //cria valor com id e name do user
-//     //   const data = Jwt.sign({ id: user.id, name: name }, "190526", {
-//     //     //cria token com id e name
-//     //     expiresIn: "24h",
-//     //   });
-//       response.status(201).json(rows)
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
-// //   async valid(request: Request, response: Response) {
-// //     //valida user
-// //     try {
-// //       const { email, password } = request.body;
-// //       const user = await prisma.user.findUnique({ where: { email } });
-// //       if (!user) {
-// //         return response.status(401).json({ erro: "Usuário não encontrado" });
-// //       }
-// //       const hash = await prisma.user.findUnique({
-// //         where: { email: email },
-// //         select: { password: true },
-// //       });
-// //       if (hash == null) {
-// //         return response.status(404).send({
-// //           message: "usuário ou senha incorretos",
-// //         });
-// //       }
-// //       const validPassword = await bcrypt.compare(password, hash.password!); //verifica se a senha eh igual
-// //       if (!validPassword) {
-// //         return response.status(401).json({ erro: "Senha inválida" });
-// //       }
-// //       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
-// //         expiresIn: "24h",
-// //       });
-// //       response.json({ data });
-// //     } catch (error) {
-// //       response.status(500).send(error);
-// //     }
-// //   }
-// //   async googlevalid(request: Request, response: Response) {
-// //     //valida google
-// //     try {
-// //       const { email } = request.body;
-// //       const user = await prisma.user.findUnique({ where: { email } }); //busca no banco
-// //       if (!user) {
-// //         return response.status(401).json({ erro: "Usuário não encontrado" });
-// //       }
-// //       const data = Jwt.sign({ id: user.id, name: user.name }, "190526", {
-// //         expiresIn: "24h",
-// //       });
-// //       response.json({ data });
-// //     } catch (error) {
-// //       response.status(500).send(error);
-// //     }
-// //   }
-// //   async all(request: Request, response: Response) {
-// //     //busca todos users
-// //     try {
-// //       const user = request.params.id;
-// //       const data = await prisma.user.findMany({
-// //         where: {
-// //           NOT: {
-// //             id: user,        //remove o com id informado
-// //           },
-// //         },
-// //         select: {id: true,
-// //           name: true,
-// //         }
-// //       });
-// //       response.status(200).json({data});
-// //     } catch (error) {
-// //       response.status(500).send(error);
-// //     }
-// //   }
-// }
-// export default new UserController();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+class UserController {
+    create(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            //cria usuario
+            try {
+                const { name, email, password } = request.body;
+                if (!name || !email || !password) {
+                    return response.status(500).json({ erro: "insira todos os dados" }); //verircia se temm todos os dados
+                }
+                const user = yield prisma.user.findUnique({
+                    where: {
+                        email,
+                    },
+                });
+                //   if (data.rows.length >= 1) {
+                //     return response.status(500).json({ erro: "email já cadastrado" });         //retorna erro
+                //   }
+                //   const passCrypt = await bcrypt.hash(password, 10);   //senha criptografada
+                //   const {rows} = await pool.query(`INSERT INTO "user" (id, name, email, password) VALUES(gen_random_uuid(),'${name}','${email}','${passCrypt}') RETURNING *`) //cria user
+                //   await pool.query(`INSERT INTO "valor" (name, user) VALUES('${name}','${rows[0].id}')`) //cria valor com id e name do user
+                //   const data = Jwt.sign({ id: user.id, name: name }, "190526", {
+                //     //cria token com id e name
+                //     expiresIn: "24h",
+                //   });
+                response.status(201).json(user);
+            }
+            catch (error) {
+                response.status(500).send(error);
+            }
+        });
+    }
+}
+exports.default = new UserController();

@@ -9,20 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import pool from "../../database";
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class TransactionController {
     get(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            // try {
-            //   const {rows} = await pool.query(
-            //     "SELECT * FROM transaction"
-            //   );
-            //   response.status(200).json(rows);
-            // } catch (error) {
-            //   response.status(500).send(error);
-            // }
             try {
                 const transactions = yield prisma.transaction.findMany();
                 response.status(200).json(transactions);
