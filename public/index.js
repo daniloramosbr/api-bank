@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const routes_1 = __importDefault(require("./src/routes/routes"));
 const dotenv_1 = require("dotenv");
 const dotenv = (0, dotenv_1.configDotenv)();
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(routes_1.default);

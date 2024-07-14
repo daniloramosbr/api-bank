@@ -17,7 +17,7 @@ class TransactionController {
     get(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield database_1.default.query("SELECT * FROM transaction ORDER BY createdAt DESC LIMIT 3");
+                const data = yield database_1.default.query("SELECT * FROM Transaction ORDER BY DESC LIMIT 3");
                 response.status(200).json({ data });
             }
             catch (error) {

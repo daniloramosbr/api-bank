@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   id        String   @id @default(uuid()) @db.VarChar(36)
   name      String
   email     String   @unique
@@ -16,7 +16,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Transaction {
+model transaction {
   id        Int      @id @default(autoincrement())
   send      String
   received  String
@@ -25,7 +25,7 @@ model Transaction {
   updatedAt DateTime @updatedAt
 }
 
-model Valor {
+model valor {
   id        Int      @id @default(autoincrement())
   name      String
   user      String   @unique

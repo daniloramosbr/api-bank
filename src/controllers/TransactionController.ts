@@ -5,7 +5,7 @@ class TransactionController {
   async get(request: Request, response: Response) {
     try {
       const data = await pool.query(
-        "SELECT * FROM transaction ORDER BY createdAt DESC LIMIT 3"
+        "SELECT * FROM Transaction ORDER BY DESC LIMIT 3"
       );
 
       response.status(200).json({ data });
