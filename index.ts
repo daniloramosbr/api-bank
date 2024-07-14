@@ -36,6 +36,6 @@ app.use((req, res, next) => {
   });
 
 app.use(routes)
-app.listen(1905, () => {
-  console.log('Servidor rodando na porta 3000')
+app.listen(process.env.PORT, () => {
+  console.log(`Servidor rodando na porta ${process.env.PORT}`)
 })
