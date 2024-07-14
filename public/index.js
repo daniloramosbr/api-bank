@@ -9,17 +9,19 @@ const routes_1 = __importDefault(require("./routes/routes"));
 const dotenv_1 = require("dotenv");
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
+const database_1 = __importDefault(require("./database"));
 const dotenv = (0, dotenv_1.configDotenv)();
 const app = (0, express_1.default)();
 exports.prisma = new client_1.PrismaClient();
-exports.prisma.$connect()
-    .then(() => {
-    console.log('conectado ao banco de dados!');
-})
-    .catch((error) => {
-    console.error('Erro ao conectar com o Prisma:', error.message);
-});
+// prisma.$connect()
+//   .then(() => {
+//     console.log('conectado ao banco de dados!');
+//   })
+//   .catch((error) => {
+//     console.error('Erro ao conectar com o Prisma:', error.message);
+//   })
 app.use(express_1.default.json());
+(0, database_1.default)();
 app.options('*', (0, cors_1.default)());
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +30,6 @@ app.use((req, res, next) => {
     next();
 });
 app.use(routes_1.default);
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`Servidor rodando na porta ${process.env.PORT}`);
 });
