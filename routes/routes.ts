@@ -1,17 +1,17 @@
-const routes = require("express").Router();
-const TransactionController = require("../api/TransactionController");
-const { PrismaClient } = require('@prisma/client');
-import { Request, Response } from "express"; 
-const prisma = new PrismaClient();
+import { Router } from "express";
+// import UserController from "../api/UserController";
+// import ValorController from "../api/ValorController";
+import TransactionController from "../api/TransactionController";
 
+const routes = Router()
 
-routes.get("/transactions", (equest: Request, response: Response) => {
-    try {
-      const transactions = prisma.transaction.findMany(); 
-      response.status(200).json(transactions);
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  });
+// routes.post("/signup", UserController.create)
+// routes.post("/signin", UserController.valid)
+// routes.post("/googlesignin", UserController.googlevalid)
+// routes.get("/users/:id", UserController.all)
+// routes.patch("/edit/:id", ValorController.edit)
+// routes.patch("/send/:id", ValorController.send)
+// routes.get("/myvalor/:id", ValorController.myvalor)
+routes.get("/transactions", TransactionController.get)
 
-module.exports = routes;
+export default routes
