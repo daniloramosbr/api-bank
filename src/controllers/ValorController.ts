@@ -1,87 +1,89 @@
-// import { prisma } from "..";
-// import { Request, Response } from "express";
 
-// class ValorController {
-//   async edit(request: Request, response: Response) {
-//     try {
-//       const user = request.params.id; // Pega o ID do usuário na URL
-//       const { valor } = request.body;
+import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-//       await prisma.valor.update({
-//         where: { user },
-//         data: { valor }, // Atualiza o valor do usuário
-//       });
+class ValorController {
+  async edit(request: Request, response: Response) {
+    try {
+      const user = request.params.id; // Pega o ID do usuário na URL
+      const { valor } = request.body;
 
-//       response.status(200).json({ message: "editado com sucesso!" });
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
+      await prisma.valor.update({
+        where: { user },
+        data: { valor }, // Atualiza o valor do usuário
+      });
 
-//   async send(request: Request, response: Response) {
-//     try {
-//       const id = request.params.id; //id de quem vai enviar
+      response.status(200).json({ message: "editado com sucesso!" });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  }
 
-//       const { user, valor } = request.body;
+  async send(request: Request, response: Response) {
+    try {
+      const id = request.params.id; //id de quem vai enviar
 
-//       if (valor === 0) {
-//         return response
-//           .status(500)
-//           .json({ erro: "impossivel enviar 0 como valor" });
-//       }
+      const { user, valor } = request.body;
 
-//       const userToSend: any = await prisma.valor.findUnique({
-//         //valor do send
-//         where: { user: id },
-//       });
+      if (valor === 0) {
+        return response
+          .status(500)
+          .json({ erro: "impossivel enviar 0 como valor" });
+      }
 
-//       if (userToSend.valor < valor) {
-//         return response.status(500).json({ erro: "saldo insuficiente!" });
-//       }
+      const userToSend: any = await prisma.valor.findUnique({
+        //valor do send
+        where: { user: id },
+      });
 
-//       const userToReceived: any = await prisma.valor.findUnique({
-//         //valor do received
-//         where: { user: user },
-//       });
+      if (userToSend.valor < valor) {
+        return response.status(500).json({ erro: "saldo insuficiente!" });
+      }
 
-//       const newValorSend = (userToSend.valor -= valor); //subtraindo do send
-//       const newValorReceived = (userToReceived.valor += valor); //somando com o valor
+      const userToReceived: any = await prisma.valor.findUnique({
+        //valor do received
+        where: { user: user },
+      });
 
-//       await prisma.valor.update({        //atualiza valor de que enviou
+      const newValorSend = (userToSend.valor -= valor); //subtraindo do send
+      const newValorReceived = (userToReceived.valor += valor); //somando com o valor
+
+      await prisma.valor.update({        //atualiza valor de que enviou
       
-//         where: { user: id },
-//         data: { valor: newValorSend },
-//       });
+        where: { user: id },
+        data: { valor: newValorSend },
+      });
 
-//       await prisma.valor.update({         //atualiza valor de quem recebeu
-//         where: { user },
-//         data: { valor: newValorReceived },
-//       });
+      await prisma.valor.update({         //atualiza valor de quem recebeu
+        where: { user },
+        data: { valor: newValorReceived },
+      });
 
-//       await prisma.transaction.create({                 //cria a transação
-//         data: { send: userToSend.name, received: userToReceived.name, valor },
-//       });
+      await prisma.transaction.create({                 //cria a transação
+        data: { send: userToSend.name, received: userToReceived.name, valor },
+      });
 
-//       response.status(201).json({ message: "enviado com sucesso!" });
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
-//   async myvalor(request: Request, response: Response) {
-//     try {
-//       const user = request.params.id; //id do user
+      response.status(201).json({ message: "enviado com sucesso!" });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  }
+  async myvalor(request: Request, response: Response) {
+    try {
+      const user = request.params.id; //id do user
 
-//       const data = await prisma.valor.findUnique({
-//         //valor do user
-//         where: { user },
-//         select: { name: true, user: true, valor: true },
-//       });
+      const data = await prisma.valor.findUnique({
+        //valor do user
+        where: { user },
+        select: { name: true, user: true, valor: true },
+      });
 
-//       response.status(200).json({ data });
-//     } catch (error) {
-//       response.status(500).send(error);
-//     }
-//   }
-// }
+      response.status(200).json({ data });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  }
+}
 
-// export default new ValorController();
+export default new ValorController();
