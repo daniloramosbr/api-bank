@@ -8,11 +8,13 @@ datasource db {
 }
 
 model transaction {
-  id       Int    @id @default(autoincrement())
-  send     String
-  received String
-  valor    Int
+  id        Int     @id @default(autoincrement())
+  send      String
+  received  String
+  valor     Int
+  createdAt DateTime @default(now()) 
 }
+
 
 model user {
   name     String
