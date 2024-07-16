@@ -21,7 +21,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, email, password } = request.body;
-                if (!name || !email || !password) {
+                if (!name || !email) {
                     return response.status(500).json({ erro: "insira todos os dados" }); //verircia se temm todos os dados
                 }
                 const user = yield prisma.user.findUnique({

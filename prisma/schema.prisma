@@ -15,7 +15,6 @@ model transaction {
   createdAt DateTime @default(now()) 
 }
 
-
 model user {
   name     String
   email    String  @unique

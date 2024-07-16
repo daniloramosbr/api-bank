@@ -12,10 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class TransactionController {
+    //  Retorna as últimas 3 transações cadastradas
     get(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const transactions = yield prisma.transaction.findMany();
+                const transactions = yield prisma.transaction.findMany({
+                    orderBy: {
+                        createdAt: 'desc', // Ordena pela data de criação em ordem decrescente
+                    },
+                    take: 3,
+                });
                 response.status(200).json(transactions);
             }
             catch (error) {
